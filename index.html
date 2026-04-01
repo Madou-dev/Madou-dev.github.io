@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DIALLO Alpha Amadou — Data Scientist</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg-card: #111118;
+    --bg-card2: #16161f;
+    --border: rgba(255,255,255,0.07);
+    --border-accent: rgba(99,179,237,0.3);
+    --text: #e8e8f0;
+    --text-muted: #6b6b80;
+    --text-dim: #3a3a50;
+    --accent: #63b3ed;
+    --accent2: #68d391;
+    --accent3: #f6ad55;
+    --accent4: #fc8181;
+    --accent-glow: rgba(99,179,237,0.15);
+    --nav-bg: rgba(10,10,15,0.88);
+    --tag-default-bg: rgba(255,255,255,0.05);
+  }
+  [data-theme="light"] {
+    --bg: #f4f4ef;
+    --bg-card: #ffffff;
+    --bg-card2: #e8e8e2;
+    --border: rgba(0,0,0,0.09);
+    --border-accent: rgba(29,96,181,0.3);
+    --text: #111118;
+    --text-muted: #55555f;
+    --text-dim: #b0b0bc;
+    --accent: #1d60b5;
+    --accent2: #1a7a47;
+    --accent3: #b45309;
+    --accent4: #dc2626;
+    --accent-glow: rgba(29,96,181,0.1);
+    --nav-bg: rgba(244,244,239,0.92);
+    --tag-default-bg: rgba(0,0,0,0.05);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { transition: background 0.3s, color 0.3s; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── THEME TOGGLE ── */
+  .theme-toggle {
+    width: 38px; height: 38px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    color: var(--text-muted);
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+    flex-shrink: 0;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+  .icon-moon { display: block; }
+  .icon-sun  { display: none; }
+  [data-theme="light"] .icon-moon { display: none; }
+  [data-theme="light"] .icon-sun  { display: block; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 4rem;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .nav-logo { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); letter-spacing: 0.1em; }
+  .nav-right { display: flex; align-items: center; gap: 2rem; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 14px; letter-spacing: 0.05em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+  }
+  .hero-grid {
+    position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+    background-image: linear-gradient(rgba(99,179,237,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(99,179,237,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 40%, transparent 100%);
+    transition: opacity 0.3s;
+  }
+  [data-theme="light"] .hero-grid { opacity: 0.4; }
+
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent);
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow::before { content: ''; display: inline-block; width: 40px; height: 1px; background: var(--accent); }
+
+  h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 800; line-height: 1.0; letter-spacing: -0.03em; margin-bottom: 1.5rem; color: var(--text); }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, var(--accent3) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero-desc { font-size: 1.1rem; color: var(--text-muted); max-width: 520px; margin-bottom: 3rem; line-height: 1.8; }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.85rem 1.75rem; border-radius: 6px;
+    font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 500;
+    cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.03em;
+  }
+  .btn-primary { background: var(--accent); color: #fff; border: 1px solid var(--accent); }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats { margin-top: 5rem; display: flex; gap: 4rem; border-top: 1px solid var(--border); padding-top: 2.5rem; }
+  .stat-num { font-size: 2.2rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 0.3rem; }
+  .stat-label { font-size: 12px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent);
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-label::after { content: ''; flex: 0 0 30px; height: 1px; background: var(--accent); opacity: 0.5; }
+  h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 3rem; color: var(--text); }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+  }
+  .skill-card { background: var(--bg-card); padding: 2rem; transition: background 0.2s; }
+  .skill-card:hover { background: var(--bg-card2); }
+  .skill-icon {
+    font-size: 1.5rem; margin-bottom: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; background: var(--accent-glow); border-radius: 10px; border: 1px solid var(--border-accent);
+  }
+  .skill-name { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text); }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 3px 8px;
+    border-radius: 4px; background: var(--tag-default-bg); color: var(--text-muted); border: 1px solid var(--border);
+  }
+  .tag.blue { background: rgba(99,179,237,0.1); color: var(--accent); border-color: rgba(99,179,237,0.2); }
+  .tag.green { background: rgba(104,211,145,0.1); color: var(--accent2); border-color: rgba(104,211,145,0.2); }
+  .tag.amber { background: rgba(246,173,85,0.1); color: var(--accent3); border-color: rgba(246,173,85,0.2); }
+  .tag.red { background: rgba(252,129,129,0.1); color: var(--accent4); border-color: rgba(252,129,129,0.2); }
+
+  /* ── PROJECTS ── */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+  .project-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s, background 0.3s;
+    cursor: pointer; text-decoration: none; color: inherit; display: block;
+  }
+  .project-card:hover { border-color: var(--border-accent); transform: translateY(-3px); }
+  .project-header { padding: 1.5rem 1.5rem 0; display: flex; justify-content: space-between; align-items: flex-start; }
+  .project-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); }
+  .project-badge { font-size: 10px; padding: 3px 10px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; }
+  .badge-blue  { background: rgba(99,179,237,0.12); color: var(--accent);  border: 1px solid rgba(99,179,237,0.25); }
+  .badge-green { background: rgba(104,211,145,0.12); color: var(--accent2); border: 1px solid rgba(104,211,145,0.25); }
+  .badge-amber { background: rgba(246,173,85,0.12);  color: var(--accent3); border: 1px solid rgba(246,173,85,0.25); }
+  .project-body { padding: 1.5rem; }
+  .project-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.3; color: var(--text); }
+  .project-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.25rem; }
+  .project-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .project-tech { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .project-link { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); opacity: 0.7; }
+  .project-card:hover .project-link { opacity: 1; }
+
+  /* ── ABOUT ── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .about-text p { color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.85; }
+  .about-text p strong { color: var(--text); }
+  .timeline { position: relative; padding-left: 1.5rem; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
+  .tl-item { margin-bottom: 2rem; position: relative; }
+  .tl-dot { position: absolute; left: -1.75rem; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+  .tl-date { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); margin-bottom: 0.25rem; }
+  .tl-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; color: var(--text); }
+  .tl-sub { font-size: 0.85rem; color: var(--text-muted); }
+
+  /* ── CONTACT ── */
+  .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .contact-cta h3 { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: -0.02em; color: var(--text); }
+  .contact-cta p { color: var(--text-muted); margin-bottom: 2rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.25rem; background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; text-decoration: none; color: var(--text);
+    transition: border-color 0.2s, background 0.2s; font-size: 0.9rem;
+  }
+  .contact-link:hover { border-color: var(--border-accent); background: var(--bg-card2); }
+  .contact-link-icon {
+    width: 36px; height: 36px; background: var(--accent-glow); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; color: var(--accent); flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .contact-link-text { flex: 1; }
+  .contact-link-label { font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .contact-link-value { font-weight: 500; color: var(--text); }
+
+  /* ── FOOTER ── */
+  footer { padding: 2rem 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .footer-mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-dim); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-eyebrow { animation: fadeUp 0.5s ease both; }
+  h1 { animation: fadeUp 0.6s 0.1s ease both; }
+  .hero-desc { animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-cta { animation: fadeUp 0.6s 0.3s ease both; }
+  .hero-stats { animation: fadeUp 0.6s 0.4s ease both; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section, .hero { padding: 4rem 1.5rem; }
+    .about-grid, .contact-wrapper { grid-template-columns: 1fr; gap: 2rem; }
+    footer { flex-direction: column; gap: 1rem; }
+    .hero-stats { gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Alpha.Data Scientist</span>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#skills">Compétences</a></li>
+      <li><a href="#projects">Projets</a></li>
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Changer le thème">
+      <span class="icon-moon">🌙</span>
+      <span class="icon-sun">☀️</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <p class="hero-eyebrow">Étudiant en Data Science et Machine Learning</p>
+  <h1>Je transforme<br><span class="gradient-text">les données</span><br>en insights.</h1>
+  <p class="hero-desc">Passionné par l'analyse de données, le machine learning et la visualisation. Je construis des pipelines propres et des dashboards qui révèlent ce que les chiffres cachent.</p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">Voir mes projets →</a>
+    <a href="#contact" class="btn btn-ghost">Me contacter</a>
+  </div>
+  <div class="hero-stats">
+    <div><div class="stat-num">5+</div><div class="stat-label">Projets réalisés</div></div>
+    <div><div class="stat-num">3+</div><div class="stat-label">Datasets analysés</div></div>
+    <div><div class="stat-num">4</div><div class="stat-label">Librairies maîtrisées</div></div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">01. Stack technique</p>
+  <h2>Compétences</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">🐍</div>
+      <div class="skill-name">Data Scientist</div>
+      <p style="font-size:0.85rem;color:var(--text-muted)">Traitement, nettoyage et transformation de datasets complexes.</p>
+      <div class="skill-tags"><span class="tag blue">Python</span><span class="tag blue">Pandas</span><span class="tag blue">NumPy</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-name">Machine Learning</div>
+      <p style="font-size:0.85rem;color:var(--text-muted)">Modélisation prédictive, classification et clustering.</p>
+      <div class="skill-tags"><span class="tag green">Scikit-learn</span><span class="tag green">Régression</span><span class="tag green">Classification</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📊</div>
+      <div class="skill-name">Visualisation</div>
+      <p style="font-size:0.85rem;color:var(--text-muted)">Dashboards interactifs et graphiques analytiques expressifs.</p>
+      <div class="skill-tags"><span class="tag amber">Matplotlib</span><span class="tag amber">Seaborn</span><span class="tag amber">Streamlit</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔍</div>
+      <div class="skill-name">Analyse Exploratoire</div>
+      <p style="font-size:0.85rem;color:var(--text-muted)">EDA approfondie, détection d'anomalies et profiling automatisé.</p>
+      <div class="skill-tags"><span class="tag red">Sweetviz</span><span class="tag red">ydata-profiling</span><span class="tag red">EDA</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background:linear-gradient(180deg,transparent 0%,rgba(99,179,237,0.02) 50%,transparent 100%)">
+  <p class="section-label">02. Réalisations</p>
+  <h2>Projets</h2>
+  <div class="projects-grid">
+
+    <a class="project-card" href="https://github.com/Madou-dev/nom-repo-climat" target="_blank" rel="noopener">
+      <div class="project-header"><span class="project-num">001</span><span class="project-badge badge-blue">EDA · Nettoyage</span></div>
+      <div class="project-body">
+        <h3 class="project-title">Analyse Climatique Africaine</h3>
+        <p class="project-desc">Nettoyage d'un dataset multi-pays avec valeurs manquantes importantes sur les colonnes température et précipitations. Analyse des tendances saisonnières et cohérence des données climatiques.</p>
+      </div>
+      <div class="project-footer">
+        <div class="project-tech"><span class="tag blue">Pandas</span><span class="tag blue">NumPy</span><span class="tag">Matplotlib</span></div>
+        <span class="project-link">Voir le repo ↗</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://automobile-08.streamlit.app/" target="_blank" rel="noopener">
+      <div class="project-header"><span class="project-num">002</span><span class="project-badge badge-amber">Dashboard · Streamlit</span></div>
+      <div class="project-body">
+        <h3 class="project-title">Dashboard Automobiles</h3>
+        <p class="project-desc">Application Streamlit interactive pour l'exploration d'un dataset automobile. Filtres dynamiques, statistiques descriptives et visualisations en temps réel.</p>
+      </div>
+      <div class="project-footer">
+        <div class="project-tech"><span class="tag amber">Streamlit</span><span class="tag blue">Pandas</span><span class="tag amber">Seaborn</span></div>
+        <span class="project-link">Voir le projet ↗</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://github.com/Madou-dev/nom-repo-tunisair" target="_blank" rel="noopener">
+      <div class="project-header"><span class="project-num">003</span><span class="project-badge badge-green">EDA · Transport</span></div>
+      <div class="project-body">
+        <h3 class="project-title">EDA Vols Tunisair</h3>
+        <p class="project-desc">Analyse exploratoire d'un dataset de vols : ponctualité, saisonnalité, routes les plus fréquentées et détection d'anomalies opérationnelles.</p>
+      </div>
+      <div class="project-footer">
+        <div class="project-tech"><span class="tag green">Pandas</span><span class="tag">Matplotlib</span><span class="tag red">ydata-profiling</span></div>
+        <span class="project-link">Voir le repo ↗</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="#" onclick="return false;" style="border-style:dashed;opacity:0.45;pointer-events:none;">
+      <div class="project-header"><span class="project-num">004</span><span class="project-badge badge-blue">Bientôt</span></div>
+      <div class="project-body">
+        <h3 class="project-title">Prochain Projet ML</h3>
+        <p class="project-desc">Un modèle prédictif en cours de développement. Reviens bientôt pour découvrir les résultats.</p>
+      </div>
+      <div class="project-footer">
+        <div class="project-tech"><span class="tag green">Scikit-learn</span><span class="tag blue">Python</span></div>
+        <span class="project-link">En cours…</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">03. Parcours</p>
+  <h2>À propos</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Étudiant en <strong>Data Science</strong>, je construis mes compétences à travers des projets concrets sur des données réelles — datasets climatiques africains, données de transport, marchés automobiles.</p>
+      <p>Mon approche : comprendre d'abord le <strong>contexte métier</strong> avant de plonger dans les données. Je crois que la valeur d'une analyse ne réside pas dans sa complexité technique, mais dans la clarté des insights qu'elle produit.</p>
+      <p>Actuellement en train d'approfondir mes connaissances en <strong>machine learning</strong> et en déploiement d'applications data avec Streamlit.</p>
+      <div style="margin-top:2rem;"><a href="cv/CV_Alpha_Amadou_Diallo.pdf" download class="btn btn-ghost" style="font-size:13px;">Télécharger CV →</a></div>
+    </div>
+    <div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2024 — Présent</div>
+          <div class="tl-title">Formation Data Science</div>
+          <div class="tl-sub">Python, Machine Learning, Visualisation</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:var(--accent2);"></div>
+          <div class="tl-date">2024</div>
+          <div class="tl-title">Projets EDA & Nettoyage</div>
+          <div class="tl-sub">Pandas, NumPy, données climatiques africaines</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:var(--accent3);"></div>
+          <div class="tl-date">2024</div>
+          <div class="tl-title">Dashboards Streamlit</div>
+          <div class="tl-sub">Applications interactives, datasets automobiles</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:var(--text-dim);box-shadow:none;"></div>
+          <div class="tl-date">Prochaine étape</div>
+          <div class="tl-title">Machine Learning Avancé</div>
+          <div class="tl-sub">Modèles prédictifs, déploiement</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">04. Contact</p>
+  <div class="contact-wrapper">
+    <div class="contact-cta">
+      <h3>Travaillons<br>ensemble.</h3>
+      <p>Ouvert aux opportunités de stage, projets collaboratifs et échanges sur la data science.</p>
+      <a href="mailto:alphaamadoud423@gmail.com" class="btn btn-primary">Envoyer un message →</a>
+    </div>
+    <div class="contact-links">
+      <a href="https://github.com/Madou-dev" class="contact-link" target="_blank" rel="noopener">
+        <div class="contact-link-icon">GH</div>
+        <div class="contact-link-text"><div class="contact-link-label">GitHub</div><div class="contact-link-value">Mon profil GitHub</div></div>
+      </a>
+      <a href="https://www.linkedin.com/in/alpha-amadou-diallo-a87383391" class="contact-link" target="_blank" rel="noopener">
+        <div class="contact-link-icon">in</div>
+        <div class="contact-link-text"><div class="contact-link-label">LinkedIn</div><div class="contact-link-value">Mon profil LinkedIn</div></div>
+      </a>
+      <a href="mailto:alphaamadoud423@gmail.com" class="contact-link">
+        <div class="contact-link-icon">@</div>
+        <div class="contact-link-text"><div class="contact-link-label">Email</div><div class="contact-link-value">Mon compte Gmail</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-mono">© 2026 — Madu</span>
+  <span class="footer-mono">Built with HTML · GitHub Pages</span>
+</footer>
+
+<script>
+  const toggle = document.getElementById('themeToggle');
+  const html = document.documentElement;
+  const saved = localStorage.getItem('portfolio-theme') || 'dark';
+  html.setAttribute('data-theme', saved);
+  toggle.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('portfolio-theme', next);
+  });
+</script>
+</body>
+</html>
