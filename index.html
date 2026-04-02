@@ -258,9 +258,8 @@
       min-height: 100svh;
     }
     h1 {
-      font-size: clamp(2.4rem, 11vw, 3.5rem);
+      font-size: clamp(1.9rem, 8.5vw, 3rem);
       letter-spacing: -0.02em;
-      word-break: keep-all;
       overflow-wrap: break-word;
     }
     .hero-eyebrow { font-size: 10px; letter-spacing: 0.12em; }
@@ -315,7 +314,7 @@
 
   /* ── RESPONSIVE PETIT MOBILE (≤390px) ── */
   @media (max-width: 390px) {
-    h1 { font-size: 2.2rem; }
+    h1 { font-size: 1.75rem; }
     .skills-grid { grid-template-columns: 1fr; }
     .hero-stats { grid-template-columns: repeat(3, 1fr); }
     .stat-num { font-size: 1.5rem; }
@@ -496,7 +495,7 @@
     <div class="contact-cta">
       <h3>Travaillons<br>ensemble.</h3>
       <p>Ouvert aux opportunités de stage, projets collaboratifs et échanges sur la data science.</p>
-      <a href="mailto:alphaamadoud423@gmail.com" class="btn btn-primary">Envoyer un message →</a>
+      <a href="/cdn-cgi/l/email-protection#4e2f223e262f2f232f2a213b2a7a7c7d0e29232f2722602d2123" class="btn btn-primary">Envoyer un message →</a>
     </div>
     <div class="contact-links">
       <a href="https://github.com/Madou-dev" class="contact-link" target="_blank" rel="noopener">
@@ -527,4 +526,10 @@
   const saved = localStorage.getItem('portfolio-theme') || 'dark';
   html.setAttribute('data-theme', saved);
   toggle.addEventListener('click', () => {
-  
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('portfolio-theme', next);
+  });
+</script>
+</body>
+</html>
