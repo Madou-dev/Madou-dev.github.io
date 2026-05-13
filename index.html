@@ -167,6 +167,7 @@
   .tag.green { background: rgba(104,211,145,0.1); color: var(--accent2); border-color: rgba(104,211,145,0.2); }
   .tag.amber { background: rgba(246,173,85,0.1); color: var(--accent3); border-color: rgba(246,173,85,0.2); }
   .tag.red { background: rgba(252,129,129,0.1); color: var(--accent4); border-color: rgba(252,129,129,0.2); }
+  .tag.grey{ background: rgba(103, 101, 101, 0.1); color: var(--accent4); border-color: rgba(103, 101, 101, 0.1); }
 
   /* ── PROJECTS ── */
   .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
@@ -366,25 +367,31 @@
       <div class="skill-icon">🐍</div>
       <div class="skill-name">Data Scientist</div>
       <p style="font-size:0.85rem;color:var(--text-muted)">Traitement, nettoyage et transformation de datasets complexes.</p>
-      <div class="skill-tags"><span class="tag blue">Python</span><span class="tag blue">Pandas</span><span class="tag blue">NumPy</span></div>
+      <div class="skill-tags"><span class="tag blue">Python</span><span class="tag blue">Pandas</span><span class="tag blue">NumPy</span><span class="tag blue">Data Cleaning</span></div>
     </div>
     <div class="skill-card">
       <div class="skill-icon">🤖</div>
       <div class="skill-name">Machine Learning</div>
       <p style="font-size:0.85rem;color:var(--text-muted)">Modélisation prédictive, classification et clustering.</p>
-      <div class="skill-tags"><span class="tag green">Scikit-learn</span><span class="tag green">Régression</span><span class="tag green">Classification</span></div>
+      <div class="skill-tags"><span class="tag green">Scikit-learn</span><span class="tag green">Régression</span><span class="tag green">Classification</span><span class="tag green">Clustering</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🧠</div>
+      <div class="skill-name">Deep Learning</div>
+      <p style="font-size:0.85rem;color:var(--text-muted)">Conception et entraînement de réseaux de neurones (CNN) pour la classification et la prédiction sur données complexes.</p>
+      <div class="skill-tags"><span class="tag red">TensorFlow</span><span class="tag red">Keras</span><span class="tag red">CNN</span></div>
     </div>
     <div class="skill-card">
       <div class="skill-icon">📊</div>
       <div class="skill-name">Visualisation</div>
       <p style="font-size:0.85rem;color:var(--text-muted)">Dashboards interactifs et graphiques analytiques expressifs.</p>
-      <div class="skill-tags"><span class="tag amber">Matplotlib</span><span class="tag amber">Seaborn</span><span class="tag amber">Streamlit</span></div>
+      <div class="skill-tags"><span class="tag amber">Plotly</span><span class="tag amber">Matplotlib</span><span class="tag amber">Seaborn</span><span class="tag amber">Streamlit</span></div>
     </div>
     <div class="skill-card">
       <div class="skill-icon">🔍</div>
       <div class="skill-name">Analyse Exploratoire</div>
       <p style="font-size:0.85rem;color:var(--text-muted)">EDA approfondie, détection d'anomalies et profiling automatisé.</p>
-      <div class="skill-tags"><span class="tag red">Sweetviz</span><span class="tag red">ydata-profiling</span><span class="tag red">EDA</span></div>
+      <div class="skill-tags"><span class="tag ">Sweetviz</span><span class="tag ">ydata-profiling</span><span class="tag ">EDA</span></div>
     </div>
   </div>
 </section>
@@ -395,7 +402,7 @@
   <h2>Projets</h2>
   <div class="projects-grid">
 
-    <a class="project-card" href="https://github.com/Madou-dev/nom-repo-climat" target="_blank" rel="noopener">
+    <a class="project-card" href="https://afrique.streamlit.app/" target="_blank" rel="noopener">
       <div class="project-header"><span class="project-num">001</span><span class="project-badge badge-blue">EDA · Nettoyage</span></div>
       <div class="project-body">
         <h3 class="project-title">Analyse Climatique Africaine</h3>
